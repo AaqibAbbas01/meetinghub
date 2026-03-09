@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MeetFlow — Premium video meetings with whiteboard, screen sharing, recording, and collaboration tools.">
+  <title>MeetFlow — Video Meetings Reimagined</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-gradient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Landing Page -->
+  <div class="landing-container">
+    <header class="landing-header">
+      <div class="logo"><span class="logo-icon">🎥</span> MeetFlow</div>
+      <p class="tagline">Premium video meetings with whiteboard, screen sharing & recording</p>
+    </header>
+
+    <div class="cards-grid">
+      <!-- Instant Meeting Card -->
+      <div class="card" id="card-instant">
+        <div class="card-title"><span class="icon">⚡</span> New Meeting</div>
+        <p class="card-desc">Start an instant meeting and invite others with a shareable link.</p>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" class="form-input" id="instant-name" placeholder="Enter your name">
+        </div>
+        <button class="btn btn-primary" id="btn-create-meeting">
+          🚀 Create Meeting
+        </button>
+      </div>
+
+      <!-- Join Meeting Card -->
+      <div class="card" id="card-join">
+        <div class="card-title"><span class="icon">🔗</span> Join Meeting</div>
+        <p class="card-desc">Enter a meeting code or link to join an existing session.</p>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" class="form-input" id="join-name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label>Meeting Code</label>
+          <input type="text" class="form-input" id="join-code" placeholder="e.g. abc12345">
+        </div>
+        <button class="btn btn-primary" id="btn-join-meeting">
+          🤝 Join Meeting
+        </button>
+      </div>
+
+      <!-- Schedule Meeting Card -->
+      <div class="card" id="card-schedule">
+        <div class="card-title"><span class="icon">📅</span> Schedule Meeting</div>
+        <p class="card-desc">Plan a meeting and send email invitations to attendees.</p>
+        <div class="form-group">
+          <label>Meeting Title</label>
+          <input type="text" class="form-input" id="schedule-title" placeholder="Team Standup">
+        </div>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" class="form-input" id="schedule-host" placeholder="Your name">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-input" id="schedule-date">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time" class="form-input" id="schedule-time">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Attendee Emails (comma separated)</label>
+          <input type="text" class="form-input" id="schedule-emails" placeholder="alice@email.com, bob@email.com">
+        </div>
+        <button class="btn btn-primary" id="btn-schedule-meeting">
+          📨 Schedule & Send Invites
+        </button>
+
+        <!-- Scheduled meetings list -->
+        <div class="scheduled-meetings" id="scheduled-meetings" style="display:none;">
+          <h4>Upcoming Meetings</h4>
+          <div id="meetings-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="MeetFlow Meeting Room — Live video conferencing with whiteboard, screen sharing, annotations, and recording.">
+    <title>MeetFlow — Meeting Room</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="meeting-container">
+        <!-- Top Bar -->
+        <div class="meeting-topbar">
+            <div class="meeting-info">
+                <span class="meeting-title" id="meeting-title">🎥 MeetFlow</span>
+                <span class="meeting-code" id="meeting-code" title="Click to copy">—</span>
+                <div class="recording-indicator" id="recording-indicator">
+                    <span class="recording-dot"></span>
+                    <span id="recording-time">REC 00:00</span>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;">
+                <div class="participants-count" id="participants-count">
+                    👥 <span>1</span>
+                </div>
+                <div class="meeting-timer" id="meeting-timer">00:00:00</div>
+            </div>
+        </div>
+
+        <!-- Main Area -->
+        <div class="meeting-main">
+            <!-- Video Grid -->
+            <div class="video-grid grid-1" id="video-grid">
+                <!-- Local video tile -->
+                <div class="video-tile" id="local-video-tile">
+                    <video id="local-video" autoplay muted playsinline></video>
+                    <div class="user-label">
+                        <span class="mic-status" id="local-mic-status"></span>
+                        <span id="local-user-name">You</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Panels -->
+            <!-- Whiteboard Panel -->
+            <div class="side-panel" id="panel-whiteboard">
+                <div class="side-panel-header">
+                    <h3>🎨 Whiteboard</h3>
+                    <button class="side-panel-close" data-panel="panel-whiteboard">✕</button>
+                </div>
+                <div class="whiteboard-toolbar" id="whiteboard-toolbar">
+                    <button class="tool-btn active" data-tool="pen" title="Pen">✏️</button>
+                    <button class="tool-btn" data-tool="line" title="Line">📏</button>
+                    <button class="tool-btn" data-tool="rect" title="Rectangle">▭</button>
+                    <button class="tool-btn" data-tool="circle" title="Circle">○</button>
+                    <button class="tool-btn" data-tool="text" title="Text">T</button>
+                    <button class="tool-btn" data-tool="eraser" title="Eraser">🧹</button>
+                    <div style="width:1px;height:24px;background:var(--border-glass);margin:0 4px;"></div>
+                    <input type="color" id="wb-color" value="#667eea" title="Color">
+                    <input type="range" id="wb-size" min="1" max="20" value="3" title="Brush Size">
+                    <button class="tool-btn" id="wb-undo" title="Undo">↩️</button>
+                    <button class="tool-btn" id="wb-clear" title="Clear All">🗑️</button>
+                </div>
+                <div class="whiteboard-canvas-container">
+                    <canvas id="whiteboard-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Text Board Panel -->
+            <div class="side-panel" id="panel-textboard">
+                <div class="side-panel-header">
+                    <h3>📝 Text Board</h3>
+                    <button class="side-panel-close" data-panel="panel-textboard">✕</button>
+                </div>
+                <div class="side-panel-body" style="display:flex;">
+                    <textarea class="textboard-area" id="textboard"
+                        placeholder="Start typing... All participants can see and edit this in real-time."></textarea>
+                </div>
+            </div>
+
+            <!-- Chat Panel -->
+            <div class="side-panel" id="panel-chat">
+                <div class="side-panel-header">
+                    <h3>💬 Chat</h3>
+                    <button class="side-panel-close" data-panel="panel-chat">✕</button>
+                </div>
+                <div class="side-panel-body" style="display:flex;flex-direction:column;">
+                    <div class="chat-messages" id="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Type a message...">
+                        <button id="btn-send-chat">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen Annotation Overlay -->
+        <div class="annotation-overlay" id="annotation-overlay">
+            <canvas id="annotation-canvas"></canvas>
+        </div>
+        <div class="annotation-toolbar" id="annotation-toolbar">
+            <button class="tool-btn active" data-ann-tool="pen" title="Pen">✏️</button>
+            <button class="tool-btn" data-ann-tool="highlighter" title="Highlighter">🖍️</button>
+            <button class="tool-btn" data-ann-tool="arrow" title="Arrow">➡️</button>
+            <button class="tool-btn" data-ann-tool="text" title="Text">T</button>
+            <button class="tool-btn" data-ann-tool="eraser" title="Eraser">🧹</button>
+            <div style="width:1px;height:24px;background:rgba(255,255,255,0.2);margin:0 4px;"></div>
+            <input type="color" id="ann-color" value="#ef4444">
+            <input type="range" id="ann-size" min="2" max="16" value="4">
+            <button class="tool-btn" id="ann-clear" title="Clear">🗑️</button>
+            <button class="tool-btn" id="ann-close" title="Close Annotations">✕</button>
+        </div>
+
+        <!-- Control Bar -->
+        <div class="control-bar">
+            <button class="btn btn-icon" id="btn-mic" title="Toggle Microphone">
+                🎤
+                <span class="tooltip">Mute</span>
+            </button>
+            <button class="btn btn-icon" id="btn-camera" title="Toggle Camera">
+                📹
+                <span class="tooltip">Camera Off</span>
+            </button>
+
+            <div class="control-divider"></div>
+
+            <button class="btn btn-icon" id="btn-screen-share" title="Share Screen">
+                🖥️
+                <span class="tooltip">Share Screen</span>
+            </button>
+            <button class="btn btn-icon" id="btn-annotate" title="Screen Marker" style="display:none;">
+                🖊️
+                <span class="tooltip">Annotate</span>
+            </button>
+
+            <div class="control-divider"></div>
+
+            <button class="btn btn-icon" id="btn-record" title="Record Meeting">
+                ⏺️
+                <span class="tooltip">Record</span>
+            </button>
+            <button class="btn btn-icon" id="btn-whiteboard" title="Whiteboard">
+                🎨
+                <span class="tooltip">Whiteboard</span>
+            </button>
+            <button class="btn btn-icon" id="btn-textboard" title="Text Board">
+                📝
+                <span class="tooltip">Text Board</span>
+            </button>
+            <button class="btn btn-icon" id="btn-chat" title="Chat">
+                💬
+                <span class="tooltip">Chat</span>
+            </button>
+
+            <div class="control-divider"></div>
+
+            <button class="btn btn-icon btn-end-call" id="btn-end-call" title="Leave Meeting">
+                📞
+                <span class="tooltip">Leave</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Recording Save Modal -->
+    <div class="modal-overlay" id="modal-save-recording">
+        <div class="modal">
+            <h2>💾 Save Recording</h2>
+            <p>Your meeting has been recorded. Choose where to save it:</p>
+            <div class="save-options">
+                <div class="save-option" id="save-local">
+                    <div class="option-icon">💻</div>
+                    <div class="option-info">
+                        <h4>Save to Computer</h4>
+                        <p>Download the recording as a WebM file</p>
+                    </div>
+                </div>
+                <div class="save-option" id="save-youtube">
+                    <div class="option-icon">📺</div>
+                    <div class="option-info">
+                        <h4>Upload to YouTube</h4>
+                        <p>Upload directly to your YouTube channel</p>
+                    </div>
+                </div>
+                <div class="save-option" id="save-drive">
+                    <div class="option-icon">📁</div>
+                    <div class="option-info">
+                        <h4>Upload to Google Drive</h4>
+                        <p>Save to your Google Drive storage</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-secondary" id="modal-close" style="margin-top:16px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/whiteboard.js"></script>
+    <script src="/js/screen-annotator.js"></script>
+    <script src="/js/recorder.js"></script>
+    <script src="/js/meeting.js"></script>
+</body>
+
+</html>
