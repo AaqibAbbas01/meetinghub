@@ -2,9 +2,8 @@ services:
   - type: web
     name: skillsxai-meet-socket
     runtime: node
-    rootDir: socket-server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd socket-server && npm install
+    startCommand: cd socket-server && npm start
     envVars:
       - key: PORT
         value: 10000
