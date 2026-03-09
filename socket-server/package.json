@@ -1,0 +1,11 @@
+{
+  "name": "skillsxai-meet-socket-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.3"
+  }
+}

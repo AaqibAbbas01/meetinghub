@@ -144,7 +144,8 @@ function MeetingPageInner() {
   // Socket + media init
   useEffect(() => {
     if (!roomId) return;
-    const socket = io();
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || '';
+    const socket = io(socketUrl, { transports: ['websocket', 'polling'] });
     socketRef.current = socket;
 
     const initMedia = async () => {
