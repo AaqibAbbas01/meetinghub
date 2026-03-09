@@ -8,6 +8,10 @@ const RTC_CONFIG = {
   iceServers: [
     { urls: "stun:stun.l.google.com:19302" },
     { urls: "stun:stun1.l.google.com:19302" },
+    { urls: "stun:openrelay.metered.ca:80" },
+    { urls: "turn:openrelay.metered.ca:80", username: "openrelayproject", credential: "openrelayproject" },
+    { urls: "turn:openrelay.metered.ca:443", username: "openrelayproject", credential: "openrelayproject" },
+    { urls: "turn:openrelay.metered.ca:443?transport=tcp", username: "openrelayproject", credential: "openrelayproject" },
   ],
 };
 
@@ -171,6 +175,9 @@ function MeetingPageInner() {
     socket.on("room-users", async ({ participants }) => {
       for (const p of participants) {
         if (p.id === socket.id || peersRef.current[p.id]) continue;
+        // Pre-create tile immediately so the grid shows the user right away
+        const videoEl = addVideoTile(p.id, p.name);
+        peersRef.current[p.id] = { pc: null, videoEl, userName: p.name };
         const pc = createPeerConnection(p.id, p.name);
         const offer = await pc.createOffer();
         await pc.setLocalDescription(offer);
@@ -179,8 +186,22 @@ function MeetingPageInner() {
       updateGridLayout();
     });
 
-    socket.on("user-joined", ({ userName: n }) => showToast(`${n} joined`, "info"));
+    socket.on("user-joined", ({ userId, userName: n }) => {
+      showToast(`${n} joined`, "info");
+      // Pre-create tile so existing users see the new participant immediately
+      if (!peersRef.current[userId]) {
+        const videoEl = addVideoTile(userId, n);
+        peersRef.current[userId] = { pc: null, videoEl, userName: n };
+        updateGridLayout();
+      }
+    });
     socket.on("offer", async ({ from, offer, userName: n }) => {
+      // Pre-create tile if not already done via user-joined
+      if (!peersRef.current[from]) {
+        const videoEl = addVideoTile(from, n);
+        peersRef.current[from] = { pc: null, videoEl, userName: n };
+        updateGridLayout();
+      }
       const pc = createPeerConnection(from, n);
       await pc.setRemoteDescription(new RTCSessionDescription(offer));
       const answer = await pc.createAnswer();
