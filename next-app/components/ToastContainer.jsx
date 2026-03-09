@@ -12,8 +12,8 @@ export default function ToastContainer() {
         setToasts(prev => prev.filter(t => t.id !== id))
       }, 3600)
     }
-    window.addEventListener('meetflow-toast', handler)
-    return () => window.removeEventListener('meetflow-toast', handler)
+    window.addEventListener('skillsxai-toast', handler)
+    return () => window.removeEventListener('skillsxai-toast', handler)
   }, [])
 
   return (

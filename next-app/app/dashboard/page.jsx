@@ -317,7 +317,7 @@ export default function Dashboard() {
       <div className="dashboard-layout">
         {/* ── Sidebar ──────────────────────────────────── */}
         <aside className="dash-sidebar">
-          <div className="dash-logo"><span>🎥</span> MeetFlow</div>
+          <div className="dash-logo"><span>🎥</span> SkillsXAI Meet</div>
           <nav className="dash-nav">
             <button className="dash-nav-item active">📅 My Meetings</button>
             <button className="dash-nav-item" onClick={() => setShowInstant(true)}>⚡ New Meeting</button>

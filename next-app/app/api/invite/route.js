@@ -52,7 +52,7 @@ export async function POST(req) {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎥 MeetFlow Meeting Invitation</h1>
+      <h1>🎥 SkillsXAI Meet Invitation</h1>
     </div>
     <div class="body">
       <p>Hi there! <strong>${hostName}</strong> has invited you to join a meeting.</p>
@@ -74,7 +74,7 @@ export async function POST(req) {
       <p style="font-size:13px;color:#9090b0;">Or copy this link: <span style="color:#667eea">${meeting.link}</span></p>
     </div>
     <div class="footer">
-      Powered by MeetFlow — Professional Video Meetings
+      Powered by SkillsXAI Meet — Professional Video Meetings
     </div>
   </div>
 </body>
@@ -107,7 +107,7 @@ export async function POST(req) {
 
     await Promise.all(emails.map(email =>
       transporter.sendMail({
-        from: `"MeetFlow" <${process.env.SMTP_USER}>`,
+        from: `"SkillsXAI Meet" <${process.env.SMTP_USER}>`,
         to: email,
         subject: `Meeting Invitation: ${meeting.title}`,
         html: emailHtml(email),

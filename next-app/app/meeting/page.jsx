@@ -23,7 +23,7 @@ const PISTON_LANGUAGES = [
 ];
 
 function showToast(message, type = "info") {
-  window.dispatchEvent(new CustomEvent("meetflow-toast", { detail: { message, type } }));
+  window.dispatchEvent(new CustomEvent("skillsxai-toast", { detail: { message, type } }));
 }
 
 function MeetingPageInner() {
@@ -419,7 +419,7 @@ function MeetingPageInner() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `MeetFlow-${new Date().toISOString().slice(0, 19).replace(/[:.]/g, "-")}.webm`;
+      a.download = `SkillsXAI-Meet-${new Date().toISOString().slice(0, 19).replace(/[:.]/g, "-")}.webm`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -440,7 +440,7 @@ function MeetingPageInner() {
     setDriveFileLink("");
     showToast("☁️ Uploading to Google Drive…", "info");
     try {
-      const fileName = `MeetFlow-${roomId}-${new Date().toISOString().slice(0, 10)}.webm`;
+      const fileName = `SkillsXAI-Meet-${roomId}-${new Date().toISOString().slice(0, 10)}.webm`;
       const form = new FormData();
       form.append("metadata", new Blob([JSON.stringify({ name: fileName, mimeType: "video/webm" })], { type: "application/json" }));
       form.append("file", blob, fileName);
@@ -553,7 +553,7 @@ function MeetingPageInner() {
       {/* Top Bar */}
       <div className="meeting-topbar">
         <div className="meeting-info">
-          <span className="meeting-title">🎥 MeetFlow</span>
+          <span className="meeting-title">🎥 SkillsXAI Meet</span>
           <span className="meeting-code" title="Click to copy" onClick={copyLink}>{roomId}</span>
           {isRecording && (
             <div className="recording-indicator active">

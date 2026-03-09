@@ -23,7 +23,7 @@ export default function LoginPage() {
       <div className="auth-container">
         <div className="auth-header">
           <div className="logo">
-            <span className="logo-icon">🎥</span> MeetFlow
+            <span className="logo-icon">🎥</span> SkillsXAI Meet
           </div>
           <p className="tagline">Professional video meetings with real-time collaboration</p>
         </div>

@@ -3,7 +3,7 @@ import Providers from "./providers";
 import ToastContainer from "@/components/ToastContainer";
 
 export const metadata = {
-  title: "MeetFlow",
+  title: "SkillsXAI Meet",
   description: "Premium video meetings with whiteboard, screen sharing, recording & collaboration tools",
 };
 

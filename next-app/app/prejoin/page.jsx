@@ -76,7 +76,7 @@ function PreJoinPageInner() {
       <div className="bg-gradient"><div className="orb orb-1"></div><div className="orb orb-2"></div><div className="orb orb-3"></div></div>
 
       <div className="prejoin-container">
-        <div className="prejoin-logo"><span>🎥</span> MeetFlow</div>
+        <div className="prejoin-logo"><span>🎥</span> SkillsXAI Meet</div>
 
         <div className="prejoin-card">
           {meeting ? (
